@@ -6,12 +6,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "books")
 @Builder
-@Data
+@Data // rest 
+@AllArgsConstructor // db
+@NoArgsConstructor // db
 public class BookModel implements Serializable {
 
     @Id
