@@ -1,12 +1,24 @@
 package com.btpn.vcs.msliveness.model;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-import jakarta.annotation.Generated;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Book {
+@Data
+@Table("books")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Book implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
+
+    String title;
 }
