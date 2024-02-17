@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "MsLivenessNonReactiveApplication",
+            "request": "launch",
+            "mainClass": "com.btpn.vcs.mslivenessnonreactive.MsLivenessNonReactiveApplication",
+            "projectName": "ms-liveness-non-reactive"
+        },
+        {
+            "type": "java",
+            "name": "MsLivenessApplication",
+            "request": "launch",
+            "mainClass": "com.btpn.vcs.msliveness.MsLivenessApplication",
+            "projectName": "ms-liveness",
+            "vmArgs": "-XX:ParallelGCThreads=4 -XX:MaxPermSize=128m -Xms512m -Xmx1g -Djava.util.concurrent.ForkJoinPool.common.parallelism=4 -Djava.lang.Thread.stackTraceLimit=256"
+        },
+        {
+            "type": "java",
+            "name": "VirtualThreadApplication",
+            "request": "launch",
+            "mainClass": "com.btpn.vcs.virtualthread.VirtualThreadApplication",
+            "projectName": "virtualthread"
+        }
+    ]
+}
