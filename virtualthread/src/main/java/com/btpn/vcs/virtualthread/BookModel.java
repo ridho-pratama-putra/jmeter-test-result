@@ -1,4 +1,4 @@
-package com.btpn.vcs.mslivenessnonreactive;
+package com.btpn.vcs.virtualthread;
 
 import java.io.Serializable;
 

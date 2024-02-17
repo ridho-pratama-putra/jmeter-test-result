@@ -1,0 +1,152 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-liveness-non-reactive-deployment
+  namespace: app
+  labels:
+    app: ms-liveness-non-reactive
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-liveness-non-reactive
+  template:
+    metadata:
+      labels:
+        app: ms-liveness-non-reactive
+    spec:
+      dnsPolicy: Default
+      containers:
+        - name: ms-liveness-non-reactive-container
+          image: docker.io/library/ms-liveness-non-reactive:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+           limits:
+             cpu: 300m
+           requests:
+             cpu: 200m
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            failureThreshold: 50
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 0 #(default)
+            periodSeconds: 10 # default
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 0 #(default)
+            periodSeconds: 3 #(default)
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ms-liveness-non-reactive-service
+  namespace: app
+spec:
+  selector:
+    app: ms-liveness-non-reactive
+  type: LoadBalancer # as marked as external service
+  ports:
+    - name: ms-liveness-non-reactive-service
+      protocol: TCP
+      port: 8080 # service port
+      targetPort: 8080 # port of container target inside pod. coz u can have multiple container in same pod
+      nodePort: 30000 # will shown at minikub service <service-name>. this config follow service type to only load balancer
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+  name: ms-liveness-non-reactive-ingress-class
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ms-liveness-non-reactive-ingress
+  namespace: app
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: ms-liveness-non-reactive-ingress-class
+  rules:
+    - host: kodir.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-liveness-non-reactive-service
+                port:
+                  number: 8080
+# ---
+# kind: "Service"
+# apiVersion: "v1"
+# metadata:
+#   name: "external-mysql-service"
+#   namespace: app
+# spec:
+#   ports:
+#     -
+#       name: "external-mysql-service"
+#       protocol: "TCP"
+#       port: 3306
+#       targetPort: 3306 
+#       nodePort: 0
+#   selector: {}
+# ---
+# kind: "Endpoints"
+# apiVersion: "v1"
+# metadata:
+#   name: "external-mysql-service-endpoint"
+#   namespace: app
+# subsets: 
+#   -
+#     addresses:
+#       -
+#         ip: "192.168.18.58"
+#     ports:
+#       -
+#         port: 3306 
+#         name: "external-mysql-service"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: external-mysql-service
+  namespace: app
+spec:
+  clusterIP: None
+  ports:
+  - port: 3306
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: external-mysql-service
+  namespace: app
+subsets:
+  - addresses:
+        - ip: 10.70.23.148
+    ports:
+      - port: 3306
+        name: external-mysql-service

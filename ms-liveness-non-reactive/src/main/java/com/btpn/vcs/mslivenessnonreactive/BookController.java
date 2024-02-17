@@ -15,6 +15,8 @@ public class BookController {
 
     @GetMapping("/")
     ResponseEntity<List<BookModel>> get() {
-        return ResponseEntity.ok().body(bookService.getData());
+        // List<BookModel> asList = Arrays.asList(BookModel.builder().title("akang").build(), BookModel.builder().title("gendang").build());
+        List<BookModel> asList = bookService.getData();
+        return ResponseEntity.ok().body(asList);
     }
 }
