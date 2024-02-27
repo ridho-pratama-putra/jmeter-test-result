@@ -15,7 +15,8 @@
             "name": "MsLivenessNonReactiveApplication",
             "request": "launch",
             "mainClass": "com.btpn.vcs.mslivenessnonreactive.MsLivenessNonReactiveApplication",
-            "projectName": "ms-liveness-non-reactive"
+            "projectName": "ms-liveness-non-reactive",
+            "envFile": "${workspaceFolder}/ms-liveness-non-reactive/deployment/dev.env"
         },
         {
             "type": "java",
@@ -23,14 +24,15 @@
             "request": "launch",
             "mainClass": "com.btpn.vcs.msliveness.MsLivenessApplication",
             "projectName": "ms-liveness",
-            "vmArgs": "-XX:ParallelGCThreads=4 -XX:MaxPermSize=128m -Xms512m -Xmx1g -Djava.util.concurrent.ForkJoinPool.common.parallelism=4 -Djava.lang.Thread.stackTraceLimit=256"
+            "envFile": "${workspaceFolder}/ms-liveness/deploy/dev.env"
         },
         {
             "type": "java",
             "name": "VirtualThreadApplication",
             "request": "launch",
             "mainClass": "com.btpn.vcs.virtualthread.VirtualThreadApplication",
-            "projectName": "virtualthread"
-        }
+            "projectName": "virtualthread",
+            "envFile": "${workspaceFolder}/virtualthread/deploy/dev.env"
+        },
     ]
 }
