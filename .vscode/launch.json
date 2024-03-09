@@ -15,16 +15,16 @@
             "name": "MsLivenessNonReactiveApplication",
             "request": "launch",
             "mainClass": "com.btpn.vcs.mslivenessnonreactive.MsLivenessNonReactiveApplication",
-            "projectName": "ms-liveness-non-reactive",
-            "envFile": "${workspaceFolder}/ms-liveness-non-reactive/deployment/dev.env"
+            "projectName": "non-reactive",
+            "envFile": "${workspaceFolder}/non-reactive/deployment/dev.env"
         },
         {
             "type": "java",
             "name": "MsLivenessApplication",
             "request": "launch",
             "mainClass": "com.btpn.vcs.msliveness.MsLivenessApplication",
-            "projectName": "ms-liveness",
-            "envFile": "${workspaceFolder}/ms-liveness/deploy/dev.env"
+            "projectName": "reactive",
+            "envFile": "${workspaceFolder}/reactive/deploy/dev.env"
         },
         {
             "type": "java",

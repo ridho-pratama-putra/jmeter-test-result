@@ -6,24 +6,24 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-liveness-non-reactive-deployment
+  name: non-reactive-deployment
   namespace: app
   labels:
-    app: ms-liveness-non-reactive
+    app: non-reactive
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ms-liveness-non-reactive
+      app: non-reactive
   template:
     metadata:
       labels:
-        app: ms-liveness-non-reactive
+        app: non-reactive
     spec:
       dnsPolicy: Default
       containers:
-        - name: ms-liveness-non-reactive-container
-          image: docker.io/library/ms-liveness-non-reactive:0.0.1-SNAPSHOT
+        - name: non-reactive-container
+          image: docker.io/library/non-reactive:0.0.1-SNAPSHOT
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -54,14 +54,14 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: ms-liveness-non-reactive-service
+  name: non-reactive-service
   namespace: app
 spec:
   selector:
-    app: ms-liveness-non-reactive
+    app: non-reactive
   type: LoadBalancer # as marked as external service
   ports:
-    - name: ms-liveness-non-reactive-service
+    - name: non-reactive-service
       protocol: TCP
       port: 8080 # service port
       targetPort: 8080 # port of container target inside pod. coz u can have multiple container in same pod
@@ -72,7 +72,7 @@ kind: IngressClass
 metadata:
   labels:
     app.kubernetes.io/component: controller
-  name: ms-liveness-non-reactive-ingress-class
+  name: non-reactive-ingress-class
   annotations:
     ingressclass.kubernetes.io/is-default-class: "true"
 spec:
@@ -81,12 +81,12 @@ spec:
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ms-liveness-non-reactive-ingress
+  name: non-reactive-ingress
   namespace: app
   # annotations:
   #   nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: ms-liveness-non-reactive-ingress-class
+  ingressClassName: non-reactive-ingress-class
   rules:
     - host: kodir.com
       http:
@@ -95,7 +95,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: ms-liveness-non-reactive-service
+                name: non-reactive-service
                 port:
                   number: 8080
 # ---

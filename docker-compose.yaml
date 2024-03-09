@@ -1,8 +1,10 @@
 version: '3'
 services:
-  ms-livenes-non-reactive:
-    image: ms-liveness-non-reactive:0.0.1-SNAPSHOT
-    build: ./ms-liveness-non-reactive
+  non-reactive:
+    image: non-reactive:0.0.1-SNAPSHOT
+    build: ./non-reactive
+    env_file:
+      - ./non-reactive/deployment/docker-dev.env
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -14,12 +16,12 @@ services:
         reservations:
           cpus: '250m'
           memory: 128M
-  ms-livenes-non-reactive-virtual-thread:
+  virtual-thread:
     image: virtualthread:0.0.1-SNAPSHOT
     build: ./virtualthread
     ports:
       - "8082:8080"
-      - "8084:8084"
+      - "8083:8084"
     env_file:
       - ./virtualthread/deploy/docker-dev.env
     deploy:
@@ -30,14 +32,14 @@ services:
         reservations:
           cpus: '250m'
           memory: 128M
-  ms-livenes-reactive:
-    image: ms-liveness:0.0.1-SNAPSHOT
-    build: ./ms-liveness
+  reactive:
+    image: reactive:0.0.1-SNAPSHOT
+    build: ./reactive
     ports:
-      - "8085:8080"
-      - "8086:8086"
+      - "8084:8080"
+      - "8085:8086"
     env_file:
-      - ./ms-liveness/deploy/docker-dev.env
+      - ./reactive/deploy/docker-dev.env
     deploy:
       resources:
         limits:
