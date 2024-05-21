@@ -23,4 +23,5 @@ public class BookModel implements Serializable {
     Long id;
 
     String title;
+    int stock;
 }

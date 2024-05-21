@@ -23,4 +23,17 @@ public class BookService {
         });
         return flatMap;
     }
+
+    public Mono<Book> checkout() throws Exception {
+        Mono<Book> byId = repository.findById(1L);
+
+        return byId.flatMap(book -> {
+            if (book.getStock() == 0) {
+                return Mono.error(new Exception());
+            }
+
+            book.setStock(book.getStock() - 1);
+            return repository.save(book);
+        });
+    }
 }

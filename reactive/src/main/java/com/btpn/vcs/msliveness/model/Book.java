@@ -21,4 +21,6 @@ public class Book implements Serializable {
     Long id;
 
     String title;
+
+    int stock;
 }

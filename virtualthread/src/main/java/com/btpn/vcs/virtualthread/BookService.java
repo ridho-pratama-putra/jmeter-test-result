@@ -15,4 +15,13 @@ public class BookService {
         List<BookModel> all = bookRepository.findAll();
         return all;
     }
+
+    public void checkout() throws Exception {
+        BookModel byId = bookRepository.findById(1L).get();
+        if (byId.getStock() == 0) {
+            throw new Exception();
+        }
+        byId.setStock(byId.getStock() - 1);
+        bookRepository.save(byId);
+    }
 }
